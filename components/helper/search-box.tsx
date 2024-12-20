@@ -1,5 +1,10 @@
 import { SearchIcon } from "lucide-react";
-import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 
 const SearchBox = () => {
   return (
@@ -8,6 +13,7 @@ const SearchBox = () => {
         <SearchIcon size={26} cursor="pointer" />
       </DialogTrigger>
       <DialogContent>
+        <DialogTitle className="hidden">Search</DialogTitle>
         <form>
           <input
             type="text"
