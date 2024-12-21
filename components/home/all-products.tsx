@@ -36,7 +36,7 @@ const AllProducts = () => {
           <LoaderIcon size={32} className="animate-spin" />
         </div>
       ) : (
-        <div className="w-4/5 mx-auto mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="w-4/5 mx-auto mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-80 gap-x-20">
           {products!.map((product) => {
             return <ProductCard key={product.id} product={product} />;
           })}
