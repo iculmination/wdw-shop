@@ -1,8 +1,12 @@
+"use client";
+
 import { Product } from "@/types";
 import { HeartIcon, ShoppingBagIcon, StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { useDispatch } from "react-redux";
+import { addItem } from "@/redux/cart.slice";
 
 type ProductCardProps = {
   product: Product;
@@ -11,6 +15,12 @@ type ProductCardProps = {
 const ProductCard = ({ product }: ProductCardProps) => {
   const num = Math.round(product.rating.rate);
   const rating = new Array(num).fill(0);
+
+  const dispatch = useDispatch();
+
+  const addToCart = (product: Product) => {
+    dispatch(addItem(product));
+  };
 
   return (
     <div className="p-4 mx-auto">
@@ -49,11 +59,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
             product.price + 10
           ).toFixed(2)}`}</p>
           <p className="text-black text-lg font-bold opacity-80">
-            ${product.price}
+            ${product.price.toFixed(2)}
           </p>
         </div>
         <div className="mt-4 flex items-center space-x-2">
-          <Button size="icon">
+          <Button size="icon" onClick={() => addToCart(product)}>
             <ShoppingBagIcon size={18} />
           </Button>
           <Button size="icon" className="bg-red-500 hover:bg-red-400">
