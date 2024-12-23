@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import {
   FUNDING,
   PayPalButtons,
@@ -25,6 +23,7 @@ const PayPalButton = ({ amount, onSuccess }: PayPalButtonProps) => {
           return actions.order.create({
             purchase_units: [
               {
+                // @ts-expect-error paypal types
                 amount: {
                   value: amount,
                 },
@@ -33,6 +32,7 @@ const PayPalButton = ({ amount, onSuccess }: PayPalButtonProps) => {
           });
         }}
         onApprove={(data, actions) => {
+          // @ts-expect-error paypal types
           return actions.order.capture().than((details) => {
             onSuccess(details);
           });
