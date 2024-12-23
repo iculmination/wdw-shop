@@ -1,16 +1,19 @@
 "use client";
 
+import PayPalButton from "@/components/helper/paypal-button";
 import { Button } from "@/components/ui/button";
-import { addItem, CartItem, removeItem } from "@/redux/cart.slice";
+import { addItem, CartItem, clearCart, removeItem } from "@/redux/cart.slice";
 import { RootState } from "@/redux/store";
 import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 
 const CartPage = () => {
   const items = useSelector((state: RootState) => state.cart.items);
   const dispatch = useDispatch();
+  const router = useRouter();
   const { user } = useUser();
 
   const totalQuantity = items.reduce((total, item) => total + item.quantity, 0);
@@ -26,6 +29,11 @@ const CartPage = () => {
 
   const removeFromCart = (id: number) => {
     dispatch(removeItem({ id }));
+  };
+
+  const handleSuccess = (details: any) => {
+    router.push("/success");
+    dispatch(clearCart());
   };
 
   return (
@@ -126,9 +134,10 @@ const CartPage = () => {
                 </Link>
               )}
               {user && (
-                <Button className="w-full bg-orange-500 hover:bg-orange-400">
-                  PayPal
-                </Button>
+                // <Button className="w-full bg-orange-500 hover:bg-orange-400">
+                //   PayPal
+                // </Button>
+                <PayPalButton amount={total} onSuccess={handleSuccess} />
               )}
             </div>
           </div>
