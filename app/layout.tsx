@@ -5,6 +5,7 @@ import Nav from "@/components/home/nav";
 import { ClerkProvider } from "@clerk/nextjs";
 import Footer from "@/components/home/footer";
 import StoreProvider from "@/redux/store-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +36,7 @@ export default function RootLayout({
           >
             <Nav />
             {children}
+            <Toaster />
             <Footer />
           </body>
         </html>

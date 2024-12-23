@@ -63,7 +63,7 @@ const ProductPage = async ({ params }: { params: Promise<{ id: number }> }) => {
           <p className="mt-2 text-sm text-black opacity-70 font-semibold">
             SKU: {Math.random() * 500}
           </p>
-          <AddToCartButton />
+          <AddToCartButton item={product} />
         </div>
       </div>
       <div className="w-4/5 mt-16 mx-auto">

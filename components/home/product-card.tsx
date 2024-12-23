@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { useDispatch } from "react-redux";
 import { addItem } from "@/redux/cart.slice";
+import { useToast } from "@/hooks/use-toast";
 
 type ProductCardProps = {
   product: Product;
@@ -16,9 +17,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const num = Math.round(product.rating.rate);
   const rating = new Array(num).fill(0);
 
+  const { toast } = useToast();
   const dispatch = useDispatch();
 
   const addToCart = (product: Product) => {
+    toast({ description: "Item added to cart", variant: "success" });
     dispatch(addItem(product));
   };
 
