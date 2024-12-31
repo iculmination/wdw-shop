@@ -5,9 +5,10 @@ import { HeartIcon, ShoppingBagIcon, StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "@/redux/cart.slice";
 import { useToast } from "@/hooks/use-toast";
+import { RootState } from "@/redux/store";
 
 type ProductCardProps = {
   product: Product;
@@ -19,6 +20,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   const { toast } = useToast();
   const dispatch = useDispatch();
+  const numberInCart = useSelector((state: RootState) => {
+    const item = state.cart.items.find((item) => item.id === product.id);
+    return item?.quantity;
+  });
 
   const addToCart = (product: Product) => {
     toast({ description: "Item added to cart", variant: "success" });
@@ -66,7 +71,16 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </p>
         </div>
         <div className="mt-4 flex items-center space-x-2">
-          <Button size="icon" onClick={() => addToCart(product)}>
+          <Button
+            size="icon"
+            onClick={() => addToCart(product)}
+            className="relative"
+          >
+            {numberInCart && (
+              <span className="absolute -top-3 -right-2 w-6 h-6 bg-red-500 text-center flex items-center justify-center flex-col text-xs text-white rounded-full select-none">
+                {numberInCart}
+              </span>
+            )}
             <ShoppingBagIcon size={18} />
           </Button>
           <Button size="icon" className="bg-red-500 hover:bg-red-400">
